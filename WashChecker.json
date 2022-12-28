@@ -1,0 +1,14 @@
+{
+  "WashDetails": [
+    {
+      "id": 1,
+      "serviceType": "",
+      "turnAroundTime": "",
+      "doorSize": "L",
+      "doorStatus": 0,
+      "doorNumber": "",
+      "mobileNumber": "",
+      "checkinTime": ""
+    }
+  ]
+}
