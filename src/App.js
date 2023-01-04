@@ -47,6 +47,7 @@ function App() {
           <Route path="/inputnumber" element={<InputNumber/>} />
           <Route path="/inputotp" element={<InputOTP/>} />
           <Route path="/opendoor" element={<OpenDoor/>} />
+          <Route path="/doorsizes" element={<OpenDoor/>} />
 
           <Route path="/services/wash/washandfold" element={<Washandfold/>} />
           <Route path="/services/wash/shoecare" element={<Shoecare/>} />

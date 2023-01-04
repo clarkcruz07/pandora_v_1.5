@@ -21,6 +21,9 @@ const Keyboard = ({setMobileNumber}) =>{
         setDisable(true)
         
        }
+       else if(cart.length > 9 && window.location.pathname=='/services/drop'){
+        setDisable(true)
+       }
        else{
         setDisable(false)
        }

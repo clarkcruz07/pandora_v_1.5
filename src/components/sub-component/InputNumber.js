@@ -11,15 +11,16 @@ const [mobilenumber, setMobileNumber] = useState('')
 const location = useLocation()
 const service = location.state?.service
 const duration = location.state?.duration
+const page = location.state?.page
 const number =  localStorage.getItem('number')
 
     return (
            <div className="container">
                 <Header />
                 <div className="col-md-10 mx-auto">
-                
+               
                     <div className="pt-10 pb-5"><h3 className="text-default bigger-text">Please enter your mobile number</h3></div>
-                    
+                    {service}
                     <div className="d-flex align-items-center justify-content-center">
                         <div><span className="biggest-text px-3">+63</span></div>
                         <div className="biggest-text"> 
@@ -45,7 +46,7 @@ const number =  localStorage.getItem('number')
                
                 </div>
                 
-                <Footer setMobileNumber={mobilenumber} service={service} duration={duration}/>
+                <Footer setMobileNumber={mobilenumber} service={service} duration={duration} page={page}/>
                
            </div>
     )

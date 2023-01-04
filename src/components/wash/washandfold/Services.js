@@ -8,11 +8,14 @@ import Footer from '../../Footer'
 import NextDayDelivery from '../../../assets/img/NDD.svg'
 import SameDayDelivery from '../../../assets/img/SDD.svg'
 import DeluxeExpress from '../../../assets/img/DE.svg'
+import {useLocation} from 'react-router-dom'
 const Services = () =>{
     const [hiddenServices, sethiddenServices] = useState('')
     const [toggleNextDay, setToggleNextDay] = useState(false)
     const [toggleSameDay, setToggleSameDay] = useState(false)
     const [toggleDeluxeExpress, setToggleDeluxeExpress] = useState(false)
+    const location = useLocation()
+    const page = location.state?.page
     function toggleServiceType(serviceType) { 
        if(serviceType == 1){
         setToggleNextDay(true)
@@ -75,7 +78,7 @@ const Services = () =>{
                             </div>
                             <input type="hidden" onChange={(e) => sethiddenServices(e.target.value)} value={hiddenServices}/>
                     </div>
-                <Footer hiddenServices={hiddenServices}/>
+                <Footer hiddenServices={hiddenServices} page={page}/>
             </div>
            
         </>

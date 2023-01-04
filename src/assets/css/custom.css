@@ -37,12 +37,17 @@
     text-align: center;
 }
 
-.claiming input[type="text"]{
+.claiming .quickpin{
     width: 625px;
     height: 70px;
     border-radius: 40px;
     border: 1px solid #333;
     text-indent: 1rem;
+}
+
+.claiming .small-svg {
+    width: 50px;
+    height: 50px;
 }
 .round {
     border-radius: 40px;
@@ -59,6 +64,11 @@
     height: 100px;
     margin-right: 3rem;
     margin-left: 5rem;
+}
+button .lf-player-container {
+    width: 165px;
+    position: relative;
+    margin: 0 auto;
 }
 .option-lang {
     display: flex;
@@ -112,6 +122,9 @@ input[type="radio"] {
 .pt-10 {
     padding-top: 10rem !important;
 }
+.pt-20 {
+    padding-top: 20rem !important;
+}
 .pt-6{
     padding-top: 8rem !important;
 }
@@ -158,7 +171,9 @@ small {
 .hidden {
     display: none;
 }
-
+.doorstatus-img{
+    height: 422px;
+}
 .btn-big {
     width: 405px;
     height: 150px;
@@ -175,4 +190,13 @@ small {
     height: 73px;
     right: 6rem;
     top: 2.5rem;
+}
+.claiming .keyboard-clear-btn {
+    /*width: 350px;*/
+    height: 100px;
+}
+
+.claiming .keyboard-btn{
+    width: 100px;
+    height: 100px;
 }

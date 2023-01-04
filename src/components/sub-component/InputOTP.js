@@ -24,14 +24,13 @@ useEffect(()=> {
     return (
            <div className="container">
                 <Header />
-                
                 <div className="col-md-10 mx-auto position-relative">
                     <div className="pt-10 pb-5"><h3 className="text-default bigger-text">Please enter your mobile number</h3></div>
                     
                         <div className="d-flex align-items-center justify-content-center flex-wrap">
                         <div><span className="biggest-text px-3">+63</span></div>
                         <div className="biggest-text"> 
-                        {mobile}
+                        {numero}
                         </div>
                         
                     </div>
@@ -52,7 +51,7 @@ useEffect(()=> {
                         })()  
                         } 
                     </div>
-                    <input type="text" value={mobilenumber} onChange={(e)=>setMobileNumber(e.target.value)}/>
+                    <input type="hidden" value={mobilenumber} onChange={(e)=>setMobileNumber(e.target.value)}/>
                     <Keyboard setMobileNumber={setMobileNumber} />
                
                 </div>
