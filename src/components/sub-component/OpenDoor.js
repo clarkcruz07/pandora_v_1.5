@@ -14,6 +14,7 @@ const OpenDoor = () =>{
     const location = useLocation()
     const doorNumber = location.state?.doorNumber
     const qpin = location.state?.qpin
+    const curr = location.state?.currentPage
     const [doorIMG, setDoorIMG] = useState('')
     const navigate = useNavigate()
     function reopenDoor() {
@@ -38,15 +39,27 @@ const OpenDoor = () =>{
         localStorage.removeItem('number')
         localStorage.removeItem('serviceType')
         navigate('/')
+        axios.get('https://pandorav2-0.onrender.com/api/get/trans/'+ qpin).then((res)=> {
+           if(curr == 'drop'){
+            axios.patch('https://pandorav2-0.onrender.com/api/update/'+res.data[0].qpin, {
+                "moduleData": res.data[0].moduleData,
+                "transStatus": Number(res.data[0].transStatus) +1
+            }).then((res) => {
+                console.log('updated')
+            })
+            .catch((err) => {
+                
+            })
+           }
+
+        })
         
     }
     useEffect(() => {
         axios.get('http://localhost:9090/api/lockercontroller/door/'+doorNumber+'/open').then(() => {
             
         })
-        /*axios.get('https://pandorav2-0.onrender.com/api/get/trans/'+ qpin).then((res)=> {
-            console.log(res.data)
-        })*/
+     
             const dataInterval = setInterval(() => {
                 fetchDoorStatus() 
             }, 1000);
@@ -56,6 +69,7 @@ const OpenDoor = () =>{
     return (
         <div className="container">
             <Header />
+            {curr} ++ {qpin} ++ {doorNumber}
             <div className="col-md-10 mx-auto pt-20">
             {
                   (() => {

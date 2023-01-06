@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react'
 
 /*imports*/
 import {useLocation, useNavigate} from 'react-router-dom'
+
 /*components*/
 import Header from '../Header'
 import Footer from '../Footer'
 import Keyboard from './Keyboard'
+
 const InputOTP = () =>{
 const [mobilenumber, setMobileNumber] = useState('')
 const location = useLocation()
@@ -14,6 +16,7 @@ const duration = location.state?.duration
 const mobile = location.state?.mobilenumber
 const numero = location.state?.numero
 const navigate = useNavigate()
+
 function changeNumber(e) {
 localStorage.setItem('number', mobile)
 navigate (-1)

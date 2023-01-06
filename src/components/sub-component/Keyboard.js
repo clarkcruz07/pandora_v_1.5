@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
 
 /*imports*/
+import Idle from "./IdleTimeout";
 /*components*/
 const Keyboard = ({setMobileNumber}) =>{
     const [cart, setCart] = useState([])
     const [disable, setDisable] = useState(false)
+    //let timer = Idle(30);
     function handleClick(e) {
         setCart(prevState => [...prevState, e].join(''));
     }
@@ -24,6 +26,7 @@ const Keyboard = ({setMobileNumber}) =>{
        else if(cart.length > 9 && window.location.pathname=='/services/drop'){
         setDisable(true)
        }
+      
        else{
         setDisable(false)
        }
@@ -31,7 +34,9 @@ const Keyboard = ({setMobileNumber}) =>{
     })
     return (
         <div>
+             
            <div className="d-flex align-items-center flex-wrap justify-content-between pt-6 col-md-8 mx-auto">
+          
                 <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(1)} disabled={disable}>1</button></div>
                 <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(2)} disabled={disable}>2</button></div>
                 <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(3)} disabled={disable}>3</button></div>

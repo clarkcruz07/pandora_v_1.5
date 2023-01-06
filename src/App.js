@@ -20,6 +20,9 @@ import Washandfold from './components/wash/washandfold/Services'
 import Shoecare from './components/wash/shoecare/Services'
 import Bagcare from './components/wash/bagcare/Services'
 import LinenCare from './components/wash/linencare/Services'
+import DoorSizes from './components/drop/DoorSizes'
+import DropReceipient from './components/drop/DropReceipient';
+import DropOTP from './components/drop/DropOTP';
 function App() {
   let timer = IdleScreen(300);
 
@@ -53,6 +56,9 @@ function App() {
           <Route path="/services/wash/shoecare" element={<Shoecare/>} />
           <Route path="/services/wash/bagcare" element={<Bagcare/>} />
           <Route path="/services/wash/linencare" element={<LinenCare/>} />
+          <Route path="/services/drop/receipient" element={<DropReceipient/>} />
+          <Route path="/services/drop/sizes" element={<DoorSizes/>} />
+          <Route path="/services/drop/otp" element={<DropOTP/>} />
         </Routes>
       </Router>
     </div>

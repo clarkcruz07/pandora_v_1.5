@@ -42,7 +42,7 @@ const Services = () =>{
                 <Header />
                     <div className="col-md-10 mx-auto">
                         <div className="pt-10 pb-5"><h3 className="text-default bigger-text">When do you want it to be done?</h3></div>
-                   
+                            
                             <div className={toggleNextDay ? "active services-lottie border-thin col-md-12 border-big-radius d-flex align-items-center my-3" : "services-lottie border-thin col-md-12 border-big-radius d-flex align-items-center my-3"} onClick={() => {toggleServiceType(1)}}>
                          
                                     <div className="d-flex flex-wrap align-items-center px-6 col-md-12">

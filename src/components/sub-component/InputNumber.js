@@ -20,7 +20,7 @@ const number =  localStorage.getItem('number')
                 <div className="col-md-10 mx-auto">
                
                     <div className="pt-10 pb-5"><h3 className="text-default bigger-text">Please enter your mobile number</h3></div>
-                    {service}
+                  
                     <div className="d-flex align-items-center justify-content-center">
                         <div><span className="biggest-text px-3">+63</span></div>
                         <div className="biggest-text"> 

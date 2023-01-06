@@ -11,13 +11,14 @@ const DropHome = () =>{
     const [mobilenumber, setMobileNumber] = useState('')
     const location = useLocation()
     const number = location.state?.mobileNumber
+    const riderNumber = location.state?.riderNumber
     return (
         <div className="container">
                 <Header />
                 <div className="col-md-10 mx-auto">
-               
+                    {riderNumber}
                     <div className="pt-10 pb-5"><h3 className="text-default bigger-text">Please enter receipient number</h3></div>
-                    {number}
+                    
                     <div className="d-flex align-items-center justify-content-center">
                         <div><span className="biggest-text px-3">+63</span></div>
                         <div className="biggest-text"> 
@@ -40,7 +41,7 @@ const DropHome = () =>{
                
                 </div>
                 
-                <Footer SetNumber={number}/>
+                <Footer SetNumber={number} recepientNumber = {mobilenumber} ridernumber={"0"+riderNumber}/>
                
            </div>     
     )

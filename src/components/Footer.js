@@ -7,7 +7,7 @@ import axios from 'axios'
 import chevron from '../assets/img/chevron_left.svg'
 import { Player } from '@lottiefiles/react-lottie-player';
 import bounceLoader from '../assets/json/bounceLoader.json'
-const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service, duration, numero, page, SetNumber}) =>{
+const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service, duration, numero, page, SetNumber, recepientNumber, ridernumber, doorSize, dropPage,receiverNumber}) =>{
   const navigate = useNavigate()
   const [disable, setDisable] = useState(false)
   const [disableBack, setDisableBack] = useState(false)
@@ -92,11 +92,30 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
 
       /*drop module*/
       else if(service == 2){
-        navigate('/services/drop',{state: {mobileNumber: "0"+setMobileNumber }})
+        setBtnNext( <Player 
+          src={bounceLoader}
+          loop
+          autoplay/>)
+          setDisable(true)
+          setHidden('hidden')
+        //axios.get('https://pandorav2-0.onrender.com/api/get/0'+setMobileNumber).then((res) => {
+          navigate('/services/drop/receipient',{state: {mobileNumber: setMobileNumber }})
+       // })
+        //.catch((err) => {
+          //console.log(err)
+        //})
+        //
       }
 
+      /*wash module */
       else if(service == 4) {
-        axios.get('https://pandorav2-0.onrender.com/api/get/0'+setMobileNumber+'/?moduleData=000'+service).then((res)=> {
+        setBtnNext( <Player 
+          src={bounceLoader}
+          loop
+          autoplay/>)
+          setDisable(true)
+          setHidden('hidden')
+        axios.get('https://pandorav2-0.onrender.com/api/get/0'+setMobileNumber+'/?moduleData=0004').then((res)=> {
          
           if(res.data == null || res.data == ''){
             console.log('null')
@@ -104,10 +123,11 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           else{
             if(res.status == 201){
               
-              navigate('/services/drop')
+              navigate('/services/drop',{state: {riderNumber: setMobileNumber }})
             }
             else {
-              navigate('/inputotp')
+              localStorage.setItem('page',4)
+              navigate('/inputotp',{state: {numero: setMobileNumber }})
             }
             
           }
@@ -116,16 +136,18 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
       }
     }
     else if(window.location.pathname=="/inputotp"){
-      if(localStorage.getItem('serviceType') == 2 || localStorage.getItem('serviceType') == 3 || localStorage.getItem('serviceType') == 4){
+      
+      if(localStorage.getItem('serviceType') == 1 || localStorage.getItem('serviceType') == 2 || localStorage.getItem('serviceType') == 3 || localStorage.getItem('serviceType') == 4){
         setBtnNext( <Player 
           src={bounceLoader}
           loop
           autoplay/>)
         setHidden('hidden')
         setDisableBack(true)
+      
         axios.post('https://pandorav2-0.onrender.com/api/verify/otp/0'+numero,{
           "mobileNumber": "0"+numero,
-          "otp": setMobileNumber
+          "otp": setMobileNumber /*otp*/
         }).then(() => {
           axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
             'mobileNumber': "0"+numero,
@@ -140,7 +162,8 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
   
           })
           .then((res) => {
-            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: setMobileNumber }})
+            console.log(res.data)
+            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin}})
            
           })
           .catch((err) => {
@@ -152,10 +175,12 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
         .catch((err) => {
           setBtnNext('Next')
           setHidden('')
-          console.log(err.response.data)
+          
+          console.log(err)
         })  
       }
       else{
+        
         setBtnNext( <Player 
           src={bounceLoader}
           loop
@@ -166,27 +191,36 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           "mobileNumber": "0"+numero,
           "otp": setMobileNumber
         }).then(() => {
-          axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
-            'mobileNumber': "0"+numero,
-            'refNumber': unixTimestamp(),
-            'moduleData': "000"+service,
-            'locData': process.env.REACT_APP_LOCATION,
-            'serviceType': localStorage.getItem('serviceType'),
-            'turnAroundTime' : duration,
-            'milestone': [{
-                'mlocData': process.env.REACT_APP_LOCATION
-            }]
-  
-          })
-          .then((res) => {
-            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: setMobileNumber  }})
-           
-          })
-          .catch((err) => {
-            setBtnNext('Next')
-            setHidden('')
-            console.log(err)
-          })
+
+          if(localStorage.getItem('page') == 4){
+            navigate('/services/drop',{state: {riderNumber: numero }})
+          }
+          else{
+            
+              axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
+              'mobileNumber': "0"+numero,
+              'refNumber': unixTimestamp(),
+              'moduleData': "000"+service,
+              'locData': process.env.REACT_APP_LOCATION,
+              'serviceType': localStorage.getItem('serviceType'),
+              'turnAroundTime' : duration,
+              'milestone': [{
+                  'mlocData': process.env.REACT_APP_LOCATION
+              }]
+    
+            })
+            .then((res) => {
+              console.log(res.data)
+              navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin }})
+            
+            })
+            .catch((err) => {
+              setBtnNext('Next')
+              setHidden('')
+              console.log(err)
+            })
+          }
+          
         })
         .catch((err) => {
           setBtnNext('Next')
@@ -198,12 +232,79 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
     }
 
     else if(window.location.pathname == '/services/drop'){
-        axios.get('https://pandorav2-0.onrender.com/api/get/'+SetNumber).then((res) => {
-         console.log(res.data)
+  
+        let merchantType = ""
+        axios.get('https://pandorav2-0.onrender.com/api/get/'+ridernumber+'/?moduleData=0004').then((res) => {
+         if(res.status == 200) {
+          merchantType = "undefine"
+          
+         }
+         else if(res.status == 201){
+          merchantType = res.data.customerType
+         }
+
+          axios.post('https://pandorav2-0.onrender.com/api/post/trans/food',{
+            'mobileNumber': "0"+ridernumber,
+            'receiverNumber': "0"+recepientNumber,
+            "merchantType": merchantType,
+            'refNumber': unixTimestamp(),
+            'moduleData': "0004",
+            'locData': process.env.REACT_APP_LOCATION,
+            'serviceType': '0',
+            'turnAroundTime' : '0',
+            'milestone': [{
+                'mlocData': process.env.REACT_APP_LOCATION
+            }]
+
+          })
+          .then((res) => {
+            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin, currentPage: 'drop'}})
+          
+          })
+          .catch((err) => {
+            setBtnNext('Next')
+            setHidden('')
+            console.log(err)
+          })
+
+
+        }).catch((err) => {
+          console.log(err)
         })
+      
+      
        
     }
-   
+    else if(window.location.pathname == '/services/drop/sizes'){
+      alert(ridernumber + "===" + doorSize +"==="+ receiverNumber)
+      navigate('/services/drop/otp',{state : {droppernumber: ridernumber, receipientnumber: receiverNumber, doorsize: doorSize}})
+      /*axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
+              'mobileNumber': "0"+ridernumber,
+              "doorSize": doorSize,
+              "recepientNumber": "0"+receiverNumber,
+              "merchantType": "undefine",
+              'refNumber': unixTimestamp(),
+              'moduleData': "0002",
+              'locData': process.env.REACT_APP_LOCATION,
+              'serviceType': "0",
+              'turnAroundTime' : "0",
+              'milestone': [{
+                  'mlocData': process.env.REACT_APP_LOCATION
+              }]
+    
+            })
+            .then((res) => {
+              console.log(res.data)
+              navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin }})
+            
+            })
+            .catch((err) => {
+              setBtnNext('Next')
+              setHidden('')
+              console.log(err)
+            })*/
+
+    }
     if(hiddenServices == 1){
       localStorage.setItem('serviceType', 1)
       navigate('/inputnumber',{state : {service: 1, duration: 1}})
@@ -269,7 +370,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
                 
               </div>
               <div>
-
+                 
                 <div> <button className="border-big-radius border-0 btn-big btn btn-default text-light bigger-text position-relative" disabled={disable} onClick={()=>navTat()}>{btnNext} <img src={chevron} className={hidden? "hidden btn-img position-absolute" : " btn-img position-absolute" }/></button></div>
          
               </div>

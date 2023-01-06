@@ -36,7 +36,7 @@ const Services = () =>{
     function setPin(){
         axios.get('https://pandorav2-0.onrender.com/api/get/trans/'+cart).then((res) => {
             console.log(res.data)
-            navigate('/opendoor',{state : {doorNumber: res.data[0].doorNumber}})
+            navigate('/opendoor',{state : {doorNumber: res.data[0].doorNumber, qpin: cart, currentPage: 'drop'}})
         })
     }
     useEffect(() => {
@@ -74,12 +74,12 @@ const Services = () =>{
            <div className="col-md-12 claiming h-100 border-thin rounded mt-4">
                <h5 className="text-center pt-5 font-weight-bold">FOR CLAIMING</h5>
                <input type="hidden" value={cart} onChange={(e) => setCart(e.target.value)}/>
-                <div className="mt-4 quickpin mx-auto position-relative">
+                <div className="mt-4 mx-auto position-relative">
                 {
                     (() => {
                 
                     if(cart == '' ){
-                        const mobile = <div className="big-text h-100  d-flex justify-content-center align-items-center"> Tap to keyboard to enter quickpin </div>
+                        const mobile = <div className="big-text h-100  d-flex justify-content-center align-items-center"> - - - - - -  </div>
                         return mobile
                     }
                     else if(cart != ''){
