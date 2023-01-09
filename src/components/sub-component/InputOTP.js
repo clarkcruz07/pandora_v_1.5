@@ -15,6 +15,7 @@ const service = location.state?.service
 const duration = location.state?.duration
 const mobile = location.state?.mobilenumber
 const numero = location.state?.numero
+const [error, setError] = useState('')
 const navigate = useNavigate()
 
 function changeNumber(e) {
@@ -22,7 +23,18 @@ localStorage.setItem('number', mobile)
 navigate (-1)
 }
 
+useEffect(() => {
+    if(localStorage.getItem('error') == ''){
+
+    }
+    else{
+        setError(localStorage.getItem('error'))
+       
+    }
+    
+})
 useEffect(()=> {
+
 },[])
     return (
            <div className="container">
@@ -39,6 +51,7 @@ useEffect(()=> {
                     </div>
                     <div className="mx-auto col-md-12" onClick={()=>changeNumber({mobile})}><h3 className="text-default bigger-text text-align pt-3">Change</h3></div>
                    <div className="big-text col-md-12 text-align"><div className="col-md-9 mx-auto pt-3">Please check the OTP that was sent to your mobile number</div></div>
+                   
                    <div className="col-md-12 text-align biggest-text pt-5 otp">
                         {
                         (() => {

@@ -16,7 +16,7 @@ const DropHome = () =>{
         <div className="container">
                 <Header />
                 <div className="col-md-10 mx-auto">
-                    {riderNumber}
+                    
                     <div className="pt-10 pb-5"><h3 className="text-default bigger-text">Please enter receipient number</h3></div>
                     
                     <div className="d-flex align-items-center justify-content-center">

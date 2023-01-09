@@ -9,10 +9,17 @@ import washIcon from '../../assets/img/washIcon.svg'
 import dropIcon from '../../assets/img/dropIcon.svg'
 import keepIcon from '../../assets/img/keepIcon.svg'
 import foodIcon from '../../assets/img/foodIcon.svg'
+
+import { Player } from '@lottiefiles/react-lottie-player';
+import bounceLoader from '../../assets/json/bounceLoader.json'
 const Services = () =>{
     const navigate = useNavigate()
     const [cart, setCart] = useState([])
     const [disable, setDisable] = useState(false)
+    const [disableBtn, setDisableBtn] = useState(false)
+    const [btnNext, setBtnNext] = useState(chevron)
+    const [error, setError] = useState('')
+    const [hidden, setHidden] = useState('hidden')
     function gotoWash(){
         navigate('/services/wash',{state : {service: 1}})
     }
@@ -34,23 +41,33 @@ const Services = () =>{
     }
 
     function setPin(){
+        setDisableBtn(true)
+        
         axios.get('https://pandorav2-0-vlak.onrender.com/api/get/trans/'+cart).then((res) => {
-            console.log(res.data)
             navigate('/opendoor',{state : {doorNumber: res.data[0].doorNumber, qpin: cart, currentPage: 'drop'}})
+        }).catch((err)=> {
+            setHidden('')
+            setDisableBtn(false)
+            setError(err.response.data)
         })
     }
     useEffect(() => {
         if(cart.length > 5) {
             setDisable(true)
         }
+        else if(cart.length == 0){
+            setDisableBtn(true)
+            setDisable(false)
+        }
         else {
             setDisable(false)
+            setDisableBtn(false)
         }
      })
     return (
         <div>
            <div className="col-md-12 services border-thin rounded mt-6">
-               <h5 className="text-center pt-5 font-weight-bold">FOR DROPPING</h5>
+               <h5 className="text-center pt-5 font-weight-bold bigger-text">FOR DROPPING</h5>
                <div className="d-flex justify-content-evenly align-items-center pt-4 flex-wrap">
                     <div className='font-weight-bold col-md-2 text-center' onClick={()=>gotoWash()}>
                         <img src={washIcon} />
@@ -72,7 +89,7 @@ const Services = () =>{
            </div>
 
            <div className="col-md-12 claiming h-100 border-thin rounded mt-4">
-               <h5 className="text-center pt-5 font-weight-bold">FOR CLAIMING</h5>
+               <h5 className="text-center pt-5 font-weight-bold bigger-text">FOR CLAIMING</h5>
                <input type="hidden" value={cart} onChange={(e) => setCart(e.target.value)}/>
                 <div className="mt-4 mx-auto position-relative">
                 {
@@ -107,14 +124,20 @@ const Services = () =>{
                     <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(3)} disabled={disable}>3</button></div>
                     <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(6)} disabled={disable}>6</button></div>
                     <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(9)} disabled={disable}>9</button></div>
-                    <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 big-text rounded" onClick={() => setPin()}><img src={chevron} className="small-svg" /></button></div>
-                    
-                </div>
-                <div className=" mx-1 my-2 col-md-12">
+                    <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 big-text rounded" disabled={disableBtn} onClick={() => setPin()}><img src={btnNext} className="small-svg" /></button></div>
                     
                 </div>
                 
+                
                 </div>
+               
+                <div className={hidden? "hidden pb-5 col-md-12" : " pb-5 col-md-12"}>
+                    <div className="bg-danger py-3 col-md-10 mx-auto rounded text-light disabled">
+                        <span className="big-text">{error}</span>
+                    </div>
+                    
+                </div>
+                
            </div>
         </div>
     )

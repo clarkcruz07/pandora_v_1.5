@@ -13,7 +13,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
   const [disableBack, setDisableBack] = useState(false)
   const [btnNext, setBtnNext] = useState('Next')
   const [hidden, setHidden] = useState('')
-
+  const [error, setError] = useState('')
   function unixTimestamp () {  
     return Math.floor(Date.now() / 1000)
   }
@@ -26,7 +26,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
  
   }
   function navTat(e) {
-  
+    localStorage.removeItem('error')
     if(servicePage == '1'){
       navigate('/services/wash/washandfold',{state:{page: 1}})   
       
@@ -163,7 +163,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           })
           .then((res) => {
             console.log(res.data)
-            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin}})
+            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin, currentPage: 'wash'}})
            
           })
           .catch((err) => {
@@ -175,7 +175,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
         .catch((err) => {
           setBtnNext('Next')
           setHidden('')
-          
+          setDisableBack(false)
           console.log(err)
         })  
       }
@@ -225,14 +225,20 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
         .catch((err) => {
           setBtnNext('Next')
           setHidden('')
-          console.log(err.response.data)
+          setError(err.response.data)
+          localStorage.setItem('error',err.response.data)
         })  
       }
         
     }
 
     else if(window.location.pathname == '/services/drop'){
-  
+      setBtnNext( <Player 
+        src={bounceLoader}
+        loop
+        autoplay/>)
+      setHidden('hidden')
+      setDisableBack(true)
         let merchantType = ""
         axios.get('https://pandorav2-0-vlak.onrender.com/api/get/'+ridernumber+'/?moduleData=0004').then((res) => {
          if(res.status == 200) {
@@ -258,13 +264,14 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
 
           })
           .then((res) => {
-            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin, currentPage: 'drop'}})
+            navigate('/opendoor',{state: {doorNumber: res.data.doorNumber, qpin: res.data.qpin, currentPage: 'Food'}})
           
           })
           .catch((err) => {
             setBtnNext('Next')
             setHidden('')
             console.log(err)
+            setDisableBack(false)
           })
 
 
@@ -341,16 +348,19 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
     else if(window.location.pathname == '/inputotp'){
       if(setMobileNumber.length < 6){
         setDisable(true)
+        setDisableBack(false)
       }
       else if(setMobileNumber.length > 9){
         setDisable(false)
       }
     }
+
    
   })
     return (
-           <div className='d-flex justify-content-evenly position-absolute bottom-0 col-md-11 pb-7'>
+           <div className='d-flex justify-content-evenly position-absolute bottom-0 col-md-11 pb-5'>
               <div>
+                
                 {
                   (() => {
                       if(window.location.pathname == '/services/wash') {

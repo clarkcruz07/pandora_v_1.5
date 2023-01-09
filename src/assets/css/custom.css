@@ -122,6 +122,9 @@ input[type="radio"] {
 .pt-10 {
     padding-top: 10rem !important;
 }
+.pt-15{
+    padding-top: 15rem !important;
+}
 .pt-20 {
     padding-top: 20rem !important;
 }
@@ -199,4 +202,16 @@ small {
 .claiming .keyboard-btn{
     width: 100px;
     height: 100px;
+}
+
+:disabled, .disabled{
+    opacity: 0.5;
+}
+
+.error{
+    text-align: center;
+}
+
+.qube-img img{
+    width: 100%;
 }

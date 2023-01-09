@@ -99,7 +99,7 @@ const Services = () =>{
                         </div>
                     <input type="radio" name='services-offered' id="services-offered" />
                 </div>
-                <div className={toggleLinens ? "active services-lottie border-thin col-md-12 border-big-radius d-flex align-items-center mt-4" : "services-lottie border-thin col-md-12 border-big-radius d-flex align-items-center mt-4" } onClick={() => {toggleServiceType(4)}}>
+                {/*<div className={toggleLinens ? "active services-lottie border-thin col-md-12 border-big-radius d-flex align-items-center mt-4" : "services-lottie border-thin col-md-12 border-big-radius d-flex align-items-center mt-4" } onClick={() => {toggleServiceType(4)}}>
                 <Player 
                         src={linensandcomforters}
                         loop
@@ -109,7 +109,7 @@ const Services = () =>{
                             <div className="small-text">Cleaning for your favorite beddings</div>
                         </div>
                     <input type="radio" name='services-offered' id="services-offered" />
-                </div>
+                </div> */}
              </div>
              <input type="hidden" onChange={(e) => setHiddenVal(e.target.value)} value={hiddenVal}/>
              <Footer servicesVal={servicesVal} servicePage={servicePage}/>

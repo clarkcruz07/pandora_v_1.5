@@ -40,7 +40,7 @@ const OpenDoor = () =>{
         localStorage.removeItem('serviceType')
         navigate('/')
         axios.get('https://pandorav2-0-vlak.onrender.com/api/get/trans/'+ qpin).then((res)=> {
-           if(curr == 'drop'){
+           if(curr == 'drop' || curr == 'Food'){
             axios.patch('https://pandorav2-0-vlak.onrender.com/api/update/'+res.data[0].qpin, {
                 "moduleData": res.data[0].moduleData,
                 "transStatus": Number(res.data[0].transStatus) +1
@@ -69,8 +69,9 @@ const OpenDoor = () =>{
     return (
         <div className="container">
             <Header />
-            {curr} ++ {qpin} ++ {doorNumber}
-            <div className="col-md-10 mx-auto pt-20">
+            
+            <div className="col-md-10 mx-auto pt-15">
+            <div className="mx-auto text-align-center error pb-5"><span className="text-default bigger-text text-uppercase font-weight-bold">{curr}</span></div>
             {
                   (() => {
                       if(doorIMG == 'open'){

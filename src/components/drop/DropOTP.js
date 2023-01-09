@@ -12,18 +12,21 @@ const DropOTP = () =>{
     const [mobilenumber, setMobileNumber] = useState('')
     const [cart, setCart] = useState([])
     const [disable, setDisable] = useState(false)
-    const [nextBtn, setNextBtn] = useState(false)
+    const [nextBtn, setNext] = useState(false)
     const [disableBack, setDisableBack] = useState(false)
     const [btnNext, setBtnNext] = useState('Next')
     const [hidden, setHidden] = useState('')
     const location = useLocation()
     const navigate = useNavigate()
+    const [error, setError] = useState('')
+    const [hiddenerr, setHiddenerr] = useState('hidden')
     const droppernumber = location.state?.droppernumber
     const receipientnumber = location.state?.receipientnumber
     const doorsize = location.state?.doorsize
 
     function handleClick(e) {
         setCart(prevState => [...prevState, e].join(''));
+       
     }
     function clearNumber (e) {
         setCart('')
@@ -36,7 +39,7 @@ const DropOTP = () =>{
     
     function backToHome(e) {
     
-            navigate(-1)
+      navigate(-1)
      
     }
     function gotoNext() {
@@ -56,6 +59,14 @@ const DropOTP = () =>{
         })
       }
       function sendOTP() {
+        let errorMessage  = ''
+        setDisableBack(true)
+        setNext(true)
+        setBtnNext( <Player 
+          src={bounceLoader}
+          loop
+          autoplay/>)
+        setHidden('hidden')
         axios.post('https://pandorav2-0-vlak.onrender.com/api/verify/otp/0'+droppernumber,{
           "mobileNumber": "0"+droppernumber,
           "otp": cart 
@@ -83,19 +94,27 @@ const DropOTP = () =>{
             .catch((err) => {
               setBtnNext('Next')
               setHidden('')
-              console.log(err)
             })
+        }).catch((err) => {
+          setBtnNext('Next')
+          setHidden('')
+          setHiddenerr('')
+          if(err.response.data == 'NOT VERIFIED'){
+            errorMessage = 'Invalid Pin'
+          }
+          setError(errorMessage)
+          setDisableBack(false)
         })
         
       }
       useEffect(() => {
-         if(cart.length > 5){
+         if(cart.length > 5 && !document.getElementById('btn-img').classList.contains('hidden')){
             setDisable(true)
-            setNextBtn(false)
+            setNext(false)
          }
          else {
             setDisable(false)
-            setNextBtn(true)
+            setNext(true)
          }
          setMobileNumber(cart)
       })
@@ -134,6 +153,13 @@ const DropOTP = () =>{
                         } 
                     </div>
                     <input type="hidden" value={mobilenumber} onChange={(e)=>setMobileNumber(e.target.value)}/>
+
+                    <div className={hiddenerr? "hidden pb-1 pt-2 col-md-12 position-absolute" : "pt-2 pb-1 col-md-12 position-absolute"}>
+                    <div className="bg-danger py-3 col-md-10 mx-auto rounded text-light disabled error">
+                        <span className="big-text mx-auto">{error}</span>
+                    </div>
+                    
+                </div>
                     <div className="d-flex align-items-center flex-wrap justify-content-between pt-6 col-md-8 mx-auto">
                         <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(1)} disabled={disable}>1</button></div>
                         <div className="keyboard-btn mx-1 my-2"><button className="keyboard-layout border-0 w-100 h-100 bigger-text rounded" onClick={()=> handleClick(2)} disabled={disable}>2</button></div>
@@ -153,12 +179,12 @@ const DropOTP = () =>{
                 
                 <div className='d-flex justify-content-evenly position-absolute bottom-0 col-md-11 pb-7'>
                     <div>
-                            <button className="border-big-radius border-0 btn-big bigger-text text-secondary" onClick={() => backToHome()} disabled={disableBack}>Back</button>
+                      <button className="border-big-radius border-0 btn-big bigger-text text-secondary" onClick={() => backToHome()} disabled={disableBack}>Back</button>
                             
                     </div>
                     <div>
                         
-                        <div> <button className="border-big-radius border-0 btn-big btn btn-default text-light bigger-text position-relative" disabled={nextBtn} onClick={()=>sendOTP()}>{btnNext} <img src={chevron} className={hidden? "hidden btn-img position-absolute" : " btn-img position-absolute" }/></button></div>
+                        <div> <button className="border-big-radius border-0 btn-big btn btn-default text-light bigger-text position-relative" disabled={nextBtn} onClick={()=>sendOTP()}>{btnNext} <img src={chevron} className={hidden? "hidden btn-img position-absolute" : " btn-img position-absolute" } id="btn-img"/></button></div>
                 
                     </div>
                 </div>

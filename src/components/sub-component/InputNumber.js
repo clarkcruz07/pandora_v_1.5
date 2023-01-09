@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 
 /*imports*/
 import {useLocation} from 'react-router-dom'
+import adsQube from '../../assets/img/FoodPanda_Qube.png'
 /*components*/
 import Header from '../Header'
 import Footer from '../Footer'
@@ -18,7 +19,7 @@ const number =  localStorage.getItem('number')
            <div className="container">
                 <Header />
                 <div className="col-md-10 mx-auto">
-               
+                
                     <div className="pt-10 pb-5"><h3 className="text-default bigger-text">Please enter your mobile number</h3></div>
                   
                     <div className="d-flex align-items-center justify-content-center">
@@ -43,7 +44,14 @@ const number =  localStorage.getItem('number')
                         </div>
                     </div>
                     <Keyboard setMobileNumber={setMobileNumber} />
-               
+                    {
+                        (() => {
+                            if(service == 4){
+                                const ads = <div className="col-md-10 qube-img mx-auto py-5"><img src={adsQube} /></div>
+                                return ads
+                            }
+                        })()  
+                        } 
                 </div>
                 
                 <Footer setMobileNumber={mobilenumber} service={service} duration={duration} page={page}/>
