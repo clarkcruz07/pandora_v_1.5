@@ -55,7 +55,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           autoplay/>)
         setHidden('hidden')
         setDisableBack(true)
-        axios.get('https://pandorav2-0.onrender.com/api/get/'+ "0"+setMobileNumber).then((res) => {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/'+ "0"+setMobileNumber).then((res) => {
          
             console.log(res)
             localStorage.setItem('number', setMobileNumber)
@@ -76,7 +76,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           autoplay/>)
         setHidden('hidden')
         setDisableBack(true)
-        axios.get('https://pandorav2-0.onrender.com/api/get/'+ "0"+setMobileNumber).then((res) => {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/'+ "0"+setMobileNumber).then((res) => {
          
           
             console.log(res)
@@ -98,7 +98,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           autoplay/>)
           setDisable(true)
           setHidden('hidden')
-        //axios.get('https://pandorav2-0.onrender.com/api/get/0'+setMobileNumber).then((res) => {
+        //axios.get('https://pandorav2-0-vlak.onrender.com/api/get/0'+setMobileNumber).then((res) => {
           navigate('/services/drop/receipient',{state: {mobileNumber: setMobileNumber }})
        // })
         //.catch((err) => {
@@ -115,7 +115,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           autoplay/>)
           setDisable(true)
           setHidden('hidden')
-        axios.get('https://pandorav2-0.onrender.com/api/get/0'+setMobileNumber+'/?moduleData=0004').then((res)=> {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/0'+setMobileNumber+'/?moduleData=0004').then((res)=> {
          
           if(res.data == null || res.data == ''){
             console.log('null')
@@ -145,11 +145,11 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
         setHidden('hidden')
         setDisableBack(true)
       
-        axios.post('https://pandorav2-0.onrender.com/api/verify/otp/0'+numero,{
+        axios.post('https://pandorav2-0-vlak.onrender.com/api/verify/otp/0'+numero,{
           "mobileNumber": "0"+numero,
           "otp": setMobileNumber /*otp*/
         }).then(() => {
-          axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
+          axios.post('https://pandorav2-0-vlak.onrender.com/api/trans/post',{
             'mobileNumber': "0"+numero,
             'refNumber': unixTimestamp(),
             'moduleData': "0001",
@@ -187,7 +187,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           autoplay/>)
         setHidden('hidden')
         setDisableBack(true)
-        axios.post('https://pandorav2-0.onrender.com/api/verify/otp/0'+numero,{
+        axios.post('https://pandorav2-0-vlak.onrender.com/api/verify/otp/0'+numero,{
           "mobileNumber": "0"+numero,
           "otp": setMobileNumber
         }).then(() => {
@@ -197,7 +197,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           }
           else{
             
-              axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
+              axios.post('https://pandorav2-0-vlak.onrender.com/api/trans/post',{
               'mobileNumber': "0"+numero,
               'refNumber': unixTimestamp(),
               'moduleData': "000"+service,
@@ -234,7 +234,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
     else if(window.location.pathname == '/services/drop'){
   
         let merchantType = ""
-        axios.get('https://pandorav2-0.onrender.com/api/get/'+ridernumber+'/?moduleData=0004').then((res) => {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/'+ridernumber+'/?moduleData=0004').then((res) => {
          if(res.status == 200) {
           merchantType = "undefine"
           
@@ -243,7 +243,7 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
           merchantType = res.data.customerType
          }
 
-          axios.post('https://pandorav2-0.onrender.com/api/post/trans/food',{
+          axios.post('https://pandorav2-0-vlak.onrender.com/api/post/trans/food',{
             'mobileNumber': "0"+ridernumber,
             'receiverNumber': "0"+recepientNumber,
             "merchantType": merchantType,
@@ -276,9 +276,9 @@ const Footer = ({servicesVal,servicePage,hiddenServices,setMobileNumber, service
        
     }
     else if(window.location.pathname == '/services/drop/sizes'){
-      alert(ridernumber + "===" + doorSize +"==="+ receiverNumber)
+      
       navigate('/services/drop/otp',{state : {droppernumber: ridernumber, receipientnumber: receiverNumber, doorsize: doorSize}})
-      /*axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
+      /*axios.post('https://pandorav2-0-vlak.onrender.com/api/trans/post',{
               'mobileNumber': "0"+ridernumber,
               "doorSize": doorSize,
               "recepientNumber": "0"+receiverNumber,

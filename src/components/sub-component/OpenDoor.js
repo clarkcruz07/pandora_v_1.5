@@ -39,9 +39,9 @@ const OpenDoor = () =>{
         localStorage.removeItem('number')
         localStorage.removeItem('serviceType')
         navigate('/')
-        axios.get('https://pandorav2-0.onrender.com/api/get/trans/'+ qpin).then((res)=> {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/trans/'+ qpin).then((res)=> {
            if(curr == 'drop'){
-            axios.patch('https://pandorav2-0.onrender.com/api/update/'+res.data[0].qpin, {
+            axios.patch('https://pandorav2-0-vlak.onrender.com/api/update/'+res.data[0].qpin, {
                 "moduleData": res.data[0].moduleData,
                 "transStatus": Number(res.data[0].transStatus) +1
             }).then((res) => {

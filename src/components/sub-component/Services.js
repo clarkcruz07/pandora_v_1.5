@@ -34,7 +34,7 @@ const Services = () =>{
     }
 
     function setPin(){
-        axios.get('https://pandorav2-0.onrender.com/api/get/trans/'+cart).then((res) => {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/trans/'+cart).then((res) => {
             console.log(res.data)
             navigate('/opendoor',{state : {doorNumber: res.data[0].doorNumber, qpin: cart, currentPage: 'drop'}})
         })

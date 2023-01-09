@@ -98,7 +98,7 @@ const DoorSizes = () =>{
                                 
                             </div>
                     </div>
-                            <input type="text" onChange={(e) => setDoorSize(e.target.value)} value={doorSize}/>
+                            <input type="hidden" onChange={(e) => setDoorSize(e.target.value)} value={doorSize}/>
                     </div>
                 <Footer doorSize={doorSize} ridernumber = {number} receiverNumber = {cart}/>
                

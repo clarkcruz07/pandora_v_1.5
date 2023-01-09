@@ -40,7 +40,7 @@ const DropOTP = () =>{
      
     }
     function gotoNext() {
-        alert('hahaha')
+        //alert('hahaha')
     }
       /*function navTat(){
         setBtnNext( <Player 
@@ -50,17 +50,17 @@ const DropOTP = () =>{
             setHidden('hidden')
       }*/
     function getOTP() {
-        axios.get('https://pandorav2-0.onrender.com/api/get/'+ "0"+droppernumber).then((res) => {
+        axios.get('https://pandorav2-0-vlak.onrender.com/api/get/'+ "0"+droppernumber).then((res) => {
             console.log(res)
             
         })
       }
       function sendOTP() {
-        axios.post('https://pandorav2-0.onrender.com/api/verify/otp/0'+droppernumber,{
+        axios.post('https://pandorav2-0-vlak.onrender.com/api/verify/otp/0'+droppernumber,{
           "mobileNumber": "0"+droppernumber,
           "otp": cart 
         }).then(()=>{
-            axios.post('https://pandorav2-0.onrender.com/api/trans/post',{
+            axios.post('https://pandorav2-0-vlak.onrender.com/api/trans/post',{
               'mobileNumber': "0"+droppernumber,
               "doorSize": doorsize,
               "receiverNumber": "0"+receipientnumber,
@@ -86,7 +86,7 @@ const DropOTP = () =>{
               console.log(err)
             })
         })
-        alert(cart)
+        
       }
       useEffect(() => {
          if(cart.length > 5){
